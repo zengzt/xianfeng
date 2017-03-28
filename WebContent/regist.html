@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">
+	   var xmlHttp;
+	   var flag;
+	   function createXMLHttp(){
+		   if(window.XMLHttpRequest){
+			   xmlHttp=new XMLHttpRequest();
+		   }else{
+			   xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+		   }
+	   }
+	   function checkUserid(userid){
+		   createXMLHttp();
+		   xmlHttp.open("POST","CheckServlet?userid="+userid);
+		   xmlHttp.onreadystatechange=function(){
+			   if (xmlHttp.readyState==4 && xmlHttp.status==200){
+				  var text=xmlHttp.responseText;
+				  if (text=="true"){
+						document.getElementById("msg").innerHTML="用户id重复，无法使用";
+				  }else{
+						document.getElementById("msg").innerHTML="用户id可以使用";
+				  }
+			   }
+		   }
+		   xmlHttp.send(null);
+		  }
+	   
+	   function checkForm(){
+		   return flag;
+	   }
+</script>
+
+     <form action="" method="post" onsubmit="return checkForm()">
+         <input type="text" name="userid" onblur="checkUserid(this.value)">      
+         <span id="msg"></span><br>
+         <input type="password" name="password"><br>
+         <input type="submit" value="注册">
+         <button type="button" value="zzz" onclick="checkUserid(userid.value)"></button>
+         <input type="reset" value="重置">
+     </form>
+
+
+
+
+
+
+</body>
+</html>
